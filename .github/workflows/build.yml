@@ -30,12 +30,12 @@ jobs:
           haxelib install flixel-ui 2.6.0
           haxelib install hscript 2.5.0
           haxelib install polymod 1.8.0
+          haxelib install actuate          # 新增，用于动画
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      # 创建 videos 目录，避免路径错误
       - name: Create videos directory
         run: mkdir -p assets/videos
 
