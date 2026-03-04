@@ -33,7 +33,8 @@ jobs:
           haxelib install polymod 1.8.0
           haxelib install actuate
           haxelib install extension-webview
-          haxelib install linc_luajit          # 新增
+          haxelib install linc_luajit
+          haxelib install hxvm-luajit          # 新增
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 
       - name: Setup Android SDK
