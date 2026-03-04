@@ -23,6 +23,7 @@ jobs:
       - name: Install Haxelib dependencies
         run: |
           haxelib setup ~/haxelib
+          # 核心依赖
           haxelib install lime 8.1.2
           haxelib install openfl 9.3.3
           haxelib install flixel 5.6.0
@@ -30,7 +31,11 @@ jobs:
           haxelib install flixel-ui 2.6.0
           haxelib install hscript 2.5.0
           haxelib install polymod 1.8.0
-          haxelib install actuate          # 新增，用于动画
+          haxelib install actuate
+          # 安装 extension-webview
+          haxelib install extension-webview
+          # 可选：如果上面失败，尝试从git安装（官方仓库）
+          # haxelib git extension-webview https://github.com/openfl/extension-webview
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 
       - name: Setup Android SDK
