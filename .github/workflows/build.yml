@@ -5,7 +5,7 @@ on:
     branches: [ master, main ]
   pull_request:
     branches: [ master, main ]
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   build:
@@ -34,6 +34,10 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+
+      # 创建 videos 目录，避免路径错误
+      - name: Create videos directory
+        run: mkdir -p assets/videos
 
       - name: Build Android APK
         run: |
