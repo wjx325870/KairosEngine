@@ -33,13 +33,16 @@ jobs:
           haxelib install extension-webview
           haxelib install linc_luajit
           haxelib install hxvm-luajit
-          # 额外可能需要的库
-          haxelib install flixel-demos
-          haxelib install lime-tools
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+
+      # 👇 新增：配置 Lime Android 目标
+      - name: Setup Lime Android
+        run: |
+          echo "y" | lime setup android
+          # 上面命令会询问一些问题，echo "y" 自动确认所有默认选项
 
       - name: Create videos directory
         run: mkdir -p assets/videos
