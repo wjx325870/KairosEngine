@@ -21,11 +21,14 @@ jobs:
       - name: Install Haxelib dependencies
         run: |
           haxelib setup ~/haxelib
-          # 安装 Lime（会提供 lime 命令）
+          # 安装 Lime
           haxelib install lime 8.1.2
-          # 将 haxelib 的 bin 目录添加到 PATH
+          # 查找 Lime 的实际位置
+          find ~ -name "lime" -type f 2>/dev/null || true
+          # 尝试添加可能的位置到 PATH
           echo "$HOME/haxelib/bin" >> $GITHUB_PATH
           echo "$HOME/.haxelib/bin" >> $GITHUB_PATH
+          echo "$HOME/haxe/lib/lime/git/bin" >> $GITHUB_PATH
           # 安装其他依赖
           haxelib install openfl 9.3.3
           haxelib install flixel 5.6.0
@@ -42,18 +45,17 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      # 确认 lime 命令可用
-      - name: Verify lime installation
+      # 方法1：使用 haxelib run 执行 Lime 命令
+      - name: Setup Lime Android (via haxelib run)
         run: |
-          which lime || echo "lime not found"
-          lime --version || echo "lime command failed"
+          echo "y" | haxelib run lime setup android
+          haxelib run lime config ANDROID_SDK $ANDROID_HOME
 
-      # 配置 Lime Android 目标
-      - name: Setup Lime Android
+      # 方法2：如果上面失败，尝试手动配置
+      - name: Manual Android SDK config
         run: |
-          echo "y" | lime setup android
-          # 或者尝试自动配置
-          lime config ANDROID_SDK $ANDROID_HOME
+          mkdir -p ~/.lime
+          echo "android.sdk.path=$ANDROID_HOME" >> ~/.lime/config.xml
 
       - name: Create videos directory
         run: mkdir -p assets/videos
